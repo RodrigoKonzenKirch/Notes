@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NotesDao {
@@ -19,8 +20,8 @@ interface NotesDao {
     suspend fun deleteNote(note: Note)
 
     @Query("SELECT * FROM notes WHERE id = :id")
-    suspend fun getNoteById(id: Int): Note
+    suspend fun getNoteById(id: Int): Flow<Note>
 
     @Query("SELECT * FROM notes")
-    fun getAllNotes(): List<Note>
+    fun getAllNotes(): Flow<List<Note>>
 }
