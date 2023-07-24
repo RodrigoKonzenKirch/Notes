@@ -8,5 +8,4 @@ import javax.inject.Inject
 class NotesScreenViewModel @Inject constructor(): ViewModel() {
 
 
-    
 }
