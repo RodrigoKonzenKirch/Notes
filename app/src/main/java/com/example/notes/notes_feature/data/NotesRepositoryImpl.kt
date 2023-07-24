@@ -20,11 +20,11 @@ class NotesRepositoryImpl @Inject constructor(
         notesDao.deleteNote(note)
     }
 
-    override suspend fun getNoteById(id: Int): Flow<Note> {
+    override fun getNoteById(id: Int): Flow<Note> {
         return notesDao.getNoteById(id)
     }
 
-    override suspend fun getAllNotes(): Flow<List<Note>> {
+    override  fun getAllNotes(): Flow<List<Note>> {
         return notesDao.getAllNotes()
     }
 }
