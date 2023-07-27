@@ -30,13 +30,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notes.R
 import com.example.notes.notes_feature.data.Note
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotesScreen(onAddNote: (noteId: Int?) -> Unit, modifier: Modifier, viewModel: NotesScreenViewModel = viewModel(), ) {
+fun NotesScreen(
+    onAddNote: (noteId: Int) -> Unit,
+    modifier: Modifier,
+) {
+    val viewModel = hiltViewModel<NotesScreenViewModel>()
     val notesState = viewModel.state.collectAsState()
 
     Scaffold(
@@ -47,7 +51,7 @@ fun NotesScreen(onAddNote: (noteId: Int?) -> Unit, modifier: Modifier, viewModel
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { onAddNote(null) }) {
+            FloatingActionButton(onClick = { onAddNote(0) }) {
                 Icon(
                     Icons.Filled.Add,
                     contentDescription = stringResource(R.string.fab_add_note_content_description)
@@ -68,7 +72,11 @@ fun NotesScreen(onAddNote: (noteId: Int?) -> Unit, modifier: Modifier, viewModel
 }
 
 @Composable
-fun NotesList(notes: List<Note>, onDeleteNote: (note: Note) -> Unit, modifier: Modifier) {
+fun NotesList(
+    notes: List<Note>,
+    onDeleteNote: (note: Note) -> Unit,
+    modifier: Modifier,
+) {
 
     LazyColumn(modifier){
         items(notes){ note ->
@@ -78,7 +86,10 @@ fun NotesList(notes: List<Note>, onDeleteNote: (note: Note) -> Unit, modifier: M
 }
 
 @Composable
-fun Note(note: Note, onDeleteNote: (note: Note) -> Unit){
+fun Note(
+    note: Note,
+    onDeleteNote: (note: Note) -> Unit,
+){
     Box(
         contentAlignment = Alignment.TopEnd,
         modifier = Modifier
