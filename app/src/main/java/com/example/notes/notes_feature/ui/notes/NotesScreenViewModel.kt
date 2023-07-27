@@ -1,4 +1,4 @@
-package com.example.notes.notes_feature.ui
+package com.example.notes.notes_feature.ui.notes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

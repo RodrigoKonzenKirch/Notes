@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.notes.notes_feature.ui.NotesScreen
 import com.example.notes.ui.theme.NotesTheme
 import dagger.hilt.android.AndroidEntryPoint
 

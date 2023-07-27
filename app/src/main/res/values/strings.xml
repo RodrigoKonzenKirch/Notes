@@ -3,4 +3,5 @@
     <string name="notes_screen_title">Notes</string>
     <string name="fab_add_note_content_description">Add note</string>
     <string name="icon_delete_note_content_description">Delete Note</string>
+    <string name="fab_done_content_description">Done</string>
 </resources>

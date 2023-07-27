@@ -1,4 +1,4 @@
-package com.example.notes.notes_feature.ui
+package com.example.notes.notes_feature.ui.notes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,6 +44,7 @@ fun NotesScreen(
     val notesState = viewModel.state.collectAsState()
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.notes_screen_title)) },

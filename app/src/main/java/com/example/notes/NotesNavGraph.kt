@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.notes.notes_feature.ui.AddEditNotesScreen
-import com.example.notes.notes_feature.ui.NotesScreen
+import com.example.notes.notes_feature.ui.add_edit_notes.AddEditNotesScreen
+import com.example.notes.notes_feature.ui.notes.NotesScreen
 
 @Composable
 fun NotesNavGraph(
