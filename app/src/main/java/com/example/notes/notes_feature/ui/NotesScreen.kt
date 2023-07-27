@@ -22,38 +22,35 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.notes.R
 import com.example.notes.notes_feature.data.Note
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotesScreen(viewModel: NotesScreenViewModel = viewModel(), modifier: Modifier) {
-    val title = remember {
-        mutableStateOf("Notes")
-    }
+fun NotesScreen(onAddNote: (noteId: Int?) -> Unit, modifier: Modifier, viewModel: NotesScreenViewModel = viewModel(), ) {
     val notesState = viewModel.state.collectAsState()
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(title.value) })
+            TopAppBar(
+                title = { Text(stringResource(R.string.notes_screen_title)) },
+                Modifier.padding(horizontal = 16.dp)
+            )
         },
         floatingActionButton = {
-            // TODO: 1. Implement screen that add notes
-            // TODO: 2. Add fixed set of colors for notes
-            FloatingActionButton(onClick = { viewModel.createNote(Note(0,"Empty note","Content for testing. Simply write something here.\nMore lines to see how it looks like\nMore lines to see how it looks like \nMore lines to see how it looks like\nOk, That's good enough I think", Color.Gray.toArgb())) }) {
+            FloatingActionButton(onClick = { onAddNote(null) }) {
                 Icon(
                     Icons.Filled.Add,
-                    contentDescription = "Add note"
+                    contentDescription = stringResource(R.string.fab_add_note_content_description)
                 )
             }
         },
@@ -83,7 +80,7 @@ fun NotesList(notes: List<Note>, onDeleteNote: (note: Note) -> Unit, modifier: M
 @Composable
 fun Note(note: Note, onDeleteNote: (note: Note) -> Unit){
     Box(
-        contentAlignment = Alignment.BottomEnd,
+        contentAlignment = Alignment.TopEnd,
         modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 5.dp)
             .background(
@@ -114,7 +111,7 @@ fun Note(note: Note, onDeleteNote: (note: Note) -> Unit){
         }
         Icon(
             Icons.Filled.Delete,
-            contentDescription = "Delete Note",
+            contentDescription = stringResource(R.string.icon_delete_note_content_description),
             modifier = Modifier
                 .padding(4.dp)
                 .clickable {
