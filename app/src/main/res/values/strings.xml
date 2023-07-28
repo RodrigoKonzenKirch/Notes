@@ -4,4 +4,7 @@
     <string name="fab_add_note_content_description">Add note</string>
     <string name="icon_delete_note_content_description">Delete Note</string>
     <string name="fab_done_content_description">Done</string>
+    <string name="fab_back_content_description">Back</string>
+    <string name="textfield_label_note_content">Content</string>
+    <string name="textfield_label_note_title">Title</string>
 </resources>
