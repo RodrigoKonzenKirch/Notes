@@ -38,6 +38,7 @@ import com.example.notes.notes_feature.data.Note
 @Composable
 fun NotesScreen(
     onAddNote: (noteId: Int) -> Unit,
+    onTapNote: (noteId: Int) -> Unit,
     modifier: Modifier,
 ) {
     val viewModel = hiltViewModel<NotesScreenViewModel>()
@@ -66,6 +67,7 @@ fun NotesScreen(
                 onDeleteNote = {
                     viewModel.deleteNote(it)
                 },
+                onTapNote = onTapNote,
                 modifier = modifier
             )
         }
@@ -76,12 +78,13 @@ fun NotesScreen(
 fun NotesList(
     notes: List<Note>,
     onDeleteNote: (note: Note) -> Unit,
+    onTapNote: (noteId: Int) -> Unit,
     modifier: Modifier,
 ) {
 
     LazyColumn(modifier){
         items(notes){ note ->
-            Note(note, onDeleteNote)
+            Note(note, onDeleteNote, onTapNote)
         }
     }
 }
@@ -90,6 +93,7 @@ fun NotesList(
 fun Note(
     note: Note,
     onDeleteNote: (note: Note) -> Unit,
+    onTapNote: (noteId: Int) -> Unit,
 ){
     Box(
         contentAlignment = Alignment.TopEnd,
@@ -99,6 +103,7 @@ fun Note(
                 Brush.horizontalGradient(listOf(Color.White, Color(note.color))),
                 RoundedCornerShape(10.dp)
             )
+            .clickable(onClick = { onTapNote(note.id) })
     ) {
         Column(Modifier.padding(12.dp)) {
             Text(

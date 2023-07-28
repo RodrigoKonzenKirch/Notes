@@ -26,7 +26,8 @@ fun NotesNavGraph(
         composable(NotesDestinations.NOTES_ROUTE) {
             NotesScreen(
                 modifier = modifier,
-                onAddNote = { noteId -> navActions.navigateToAddEditNote(noteId) }
+                onAddNote = { noteId -> navActions.navigateToAddEditNote(noteId) },
+                onTapNote = { noteId -> navActions.navigateToAddEditNote(noteId) },
                 )
         }
 
