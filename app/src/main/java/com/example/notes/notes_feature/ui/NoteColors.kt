@@ -1,7 +1,6 @@
 package com.example.notes.notes_feature.ui
 
 import androidx.compose.ui.graphics.Color
-import androidx.core.graphics.toColorInt
 
 enum class NoteColors(
     val color: Color

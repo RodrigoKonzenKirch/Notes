@@ -16,6 +16,7 @@ import javax.inject.Inject
 class NotesScreenViewModel @Inject constructor(
     private val repository: NotesRepository
 ): ViewModel() {
+
     private val dispatcher = Dispatchers.IO
     private var _state: StateFlow<List<Note>> = repository.getAllNotes()
         .stateIn(
@@ -23,12 +24,6 @@ class NotesScreenViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList())
     val state: StateFlow<List<Note>> = _state
-
-    fun createNote(note: Note){
-        viewModelScope.launch(dispatcher) {
-            repository.insertNote(note)
-        }
-    }
 
     fun deleteNote(note: Note){
         viewModelScope.launch(dispatcher) {

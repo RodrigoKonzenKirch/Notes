@@ -73,6 +73,7 @@ fun AddEditNotesScreen(
             }
         }
     ) { innerPadding ->
+
         val message = stringResource(R.string.snackbar_note_saved)
         LaunchedEffect(key1 = state.value.shouldShowMessage) {
             if (state.value.shouldShowMessage) {

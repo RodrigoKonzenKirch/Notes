@@ -18,6 +18,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * This color is to be used as default color
+ * for new notes **/
 object DefaultColor{
     val COLOR: Int = NoteColors.BLUE.color.toArgb()
 }
