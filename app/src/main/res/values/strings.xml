@@ -7,4 +7,5 @@
     <string name="fab_back_content_description">Back</string>
     <string name="textfield_label_note_content">Content</string>
     <string name="textfield_label_note_title">Title</string>
+    <string name="snackbar_note_saved">Note Saved</string>
 </resources>

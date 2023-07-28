@@ -20,10 +20,14 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -42,7 +46,9 @@ fun AddEditNotesScreen(
 ) {
     val viewModel = hiltViewModel<AddEditNotesViewModel>()
     val state = viewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier,
         topBar = {
             TopAppBar(
@@ -67,6 +73,13 @@ fun AddEditNotesScreen(
             }
         }
     ) { innerPadding ->
+        val message = stringResource(R.string.snackbar_note_saved)
+        LaunchedEffect(key1 = state.value.shouldShowMessage) {
+            if (state.value.shouldShowMessage) {
+                snackbarHostState.showSnackbar(message)
+                viewModel.messageShown()
+            }
+        }
         Column(Modifier.padding(innerPadding)) {
             ColorsRow(
                 onSelectColor = { color ->
@@ -96,7 +109,9 @@ fun ColorsRow(
         availableColorsList.add(color.color)
     }
 
-    Row(modifier = Modifier.selectableGroup().fillMaxWidth(),
+    Row(modifier = Modifier
+        .selectableGroup()
+        .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly) {
         availableColorsList.forEachIndexed { index, radioColor ->
             Box(
@@ -113,7 +128,10 @@ fun ColorsRow(
                 Canvas(
                     modifier = Modifier
                         .size(size = 60.dp)
-                        .border( color = if (selectedColor == radioColor) Color.Cyan else Color.Transparent, width = 2.dp)
+                        .border(
+                            color = if (selectedColor == radioColor) Color.Cyan else Color.Transparent,
+                            width = 2.dp
+                        )
                 ) {
                     drawRoundRect(availableColorsList[index])
                 }

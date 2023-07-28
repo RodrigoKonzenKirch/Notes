@@ -28,6 +28,7 @@ data class AddEditNoteUiState(
     val content: String = "",
     val color: Int = DefaultColor.COLOR,
     val isLoading: Boolean = false,
+    val shouldShowMessage: Boolean = false,
 )
 
 @HiltViewModel
@@ -77,7 +78,16 @@ class AddEditNotesViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             repository.upsertNote(note)
         }
+        _uiState.update {
+            it.copy(shouldShowMessage = true)
+        }
         clearCurrentNote()
+    }
+
+    fun messageShown() {
+        _uiState.update {
+            it.copy(shouldShowMessage = false)
+        }
     }
 
     private fun clearCurrentNote(){
