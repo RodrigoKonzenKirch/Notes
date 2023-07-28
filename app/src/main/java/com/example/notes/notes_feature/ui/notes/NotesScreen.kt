@@ -15,8 +15,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -60,6 +62,7 @@ fun NotesScreen(
                 )
             }
         },
+        floatingActionButtonPosition = FabPosition.Center
     ) { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
             NotesList(
@@ -100,7 +103,12 @@ fun Note(
         modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 5.dp)
             .background(
-                Brush.horizontalGradient(listOf(Color.White, Color(note.color))),
+                Brush.horizontalGradient(
+                    listOf(
+                        Color(note.color),
+                        MaterialTheme.colorScheme.surface
+                    )
+                ),
                 RoundedCornerShape(10.dp)
             )
             .clickable(onClick = { onTapNote(note.id) })
@@ -111,7 +119,7 @@ fun Note(
 
                 Modifier
                     .fillMaxWidth(),
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif
             )
@@ -120,7 +128,7 @@ fun Note(
                 text = note.content,
                 Modifier
                     .fillMaxWidth(),
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontFamily = FontFamily.Serif
             )
         }
@@ -132,7 +140,7 @@ fun Note(
                 .clickable {
                     onDeleteNote(note)
                 },
-            tint = Color.Black
+            tint = MaterialTheme.colorScheme.onSurface
         )
     }
 }
