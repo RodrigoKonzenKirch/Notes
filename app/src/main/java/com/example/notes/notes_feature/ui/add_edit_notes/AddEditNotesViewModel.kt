@@ -6,11 +6,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notes.NotesDestinationsArgs
+import com.example.notes.di.DispatcherIo
 import com.example.notes.notes_feature.data.Note
 import com.example.notes.notes_feature.domain.NotesRepository
 import com.example.notes.notes_feature.ui.NoteColors
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -37,10 +38,10 @@ data class AddEditNoteUiState(
 @HiltViewModel
 class AddEditNotesViewModel @Inject constructor(
     private val repository: NotesRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    @DispatcherIo private val dispatcherIo: CoroutineDispatcher
 ): ViewModel() {
     private val noteId: String? = savedStateHandle[NotesDestinationsArgs.NOTE_ID_ARG]
-    private val dispatcher = Dispatchers.IO
 
     private val _uiState = MutableStateFlow(AddEditNoteUiState())
     val uiState: StateFlow<AddEditNoteUiState> = _uiState.asStateFlow()
@@ -78,7 +79,7 @@ class AddEditNotesViewModel @Inject constructor(
             _uiState.value.content,
             _uiState.value.color
         )
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(dispatcherIo) {
             repository.upsertNote(note)
         }
         _uiState.update {
@@ -108,7 +109,7 @@ class AddEditNotesViewModel @Inject constructor(
         _uiState.update {
             it.copy(isLoading = true)
         }
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(dispatcherIo) {
             repository.getNoteById(noteId).let { note ->
                 _uiState.update {
                     it.copy(
