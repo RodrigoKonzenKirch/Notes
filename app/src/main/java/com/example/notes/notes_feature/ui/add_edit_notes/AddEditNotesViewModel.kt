@@ -47,6 +47,8 @@ class AddEditNotesViewModel @Inject constructor(
     val uiState: StateFlow<AddEditNoteUiState> = _uiState.asStateFlow()
 
     init {
+        /* Id equals to zero means creating a new note
+        *  Id different from zero means editing an existing note*/
         val noteIdInt = noteId?.toInt() ?: 0
         if (noteIdInt  != 0) {
             loadNote(noteIdInt)
@@ -85,7 +87,7 @@ class AddEditNotesViewModel @Inject constructor(
         _uiState.update {
             it.copy(shouldShowMessage = true)
         }
-        clearCurrentNote()
+        clearState()
     }
 
     fun messageShown() {
@@ -94,7 +96,7 @@ class AddEditNotesViewModel @Inject constructor(
         }
     }
 
-    private fun clearCurrentNote(){
+    private fun clearState(){
         _uiState.update {
             it.copy(
                 id = 0,
