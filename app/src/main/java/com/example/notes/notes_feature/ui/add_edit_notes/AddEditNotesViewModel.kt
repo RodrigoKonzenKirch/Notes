@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.notes.NotesDestinationsArgs
 import com.example.notes.di.DispatcherIo
 import com.example.notes.notes_feature.aplication.GetNoteUseCase
+import com.example.notes.notes_feature.aplication.UpsertNoteUseCase
 import com.example.notes.notes_feature.data.Note
-import com.example.notes.notes_feature.domain.NotesRepository
 import com.example.notes.notes_feature.ui.NoteColors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -38,7 +38,7 @@ data class AddEditNoteUiState(
 
 @HiltViewModel
 class AddEditNotesViewModel @Inject constructor(
-    private val repository: NotesRepository,
+    private val upsertNote: UpsertNoteUseCase,
     private val getNote: GetNoteUseCase,
     savedStateHandle: SavedStateHandle,
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher
@@ -84,7 +84,7 @@ class AddEditNotesViewModel @Inject constructor(
             _uiState.value.color
         )
         viewModelScope.launch(dispatcherIo) {
-            repository.upsertNote(note)
+            upsertNote(note)
         }
         _uiState.update {
             it.copy(shouldShowMessage = true)
