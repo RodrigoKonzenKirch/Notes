@@ -6,20 +6,19 @@ import com.example.notes.MainCoroutineRule
 import com.example.notes.NotesDestinationsArgs
 import com.example.notes.notes_feature.aplication.GetNoteUseCase
 import com.example.notes.notes_feature.aplication.UpsertNoteUseCase
-import com.example.notes.notes_feature.domain.NotesRepository
+import com.example.notes.notes_feature.data.Note
 import com.google.common.truth.Truth.assertThat
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import com.example.notes.notes_feature.data.Note
-import io.mockk.coVerify
-import kotlinx.coroutines.test.runTest
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class AddEditNotesViewModelTest {

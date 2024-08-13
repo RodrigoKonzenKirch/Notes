@@ -1,5 +1,9 @@
 package com.example.notes.notes_feature.di
 
+import com.example.notes.notes_feature.aplication.DeleteNoteUseCase
+import com.example.notes.notes_feature.aplication.DeleteNoteUseCaseImpl
+import com.example.notes.notes_feature.aplication.GetAllNotesUseCase
+import com.example.notes.notes_feature.aplication.GetAllNotesUseCaseImpl
 import com.example.notes.notes_feature.aplication.GetNoteUseCase
 import com.example.notes.notes_feature.aplication.GetNoteUseCaseImpl
 import com.example.notes.notes_feature.aplication.InsertNoteUseCase
@@ -27,5 +31,13 @@ abstract class UseCaseModule {
     @Singleton
     @Binds
     abstract fun bindUpsertNoteUseCase(upsertNoteUseCaseImpl: UpsertNoteUseCaseImpl): UpsertNoteUseCase
+
+    @Singleton
+    @Binds
+    abstract fun bindDeleteNoteUseCase(deleteNoteUseCaseImpl: DeleteNoteUseCaseImpl): DeleteNoteUseCase
+
+    @Singleton
+    @Binds
+    abstract fun bindGetAllNotesUseCase(getAllNotesUseCaseImpl: GetAllNotesUseCaseImpl): GetAllNotesUseCase
 
 }

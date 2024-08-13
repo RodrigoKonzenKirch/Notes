@@ -8,19 +8,19 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
-class InsertNoteUseCaseImplTest {
+class DeleteNoteUseCaseImplTest {
 
     private val notesRepository = mockk<NotesRepository>(relaxed = true)
-    private val insertNoteUseCase = InsertNoteUseCaseImpl(notesRepository)
+    private val deleteNoteUseCase = DeleteNoteUseCaseImpl(notesRepository)
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `insertNoteUseCase should call insertNote on notesRepository`() = runTest {
-        val note = Note(1, "Title", "Content", color = 1)
+    fun `deleteNote should call deleteNote on notesRepository`() = runTest {
+        val note = Note(1, "Title", "Content", 1)
 
-        insertNoteUseCase(note)
+        deleteNoteUseCase(note)
 
-        coVerify { notesRepository.insertNote(note) }
+        coVerify { notesRepository.deleteNote(note) }
     }
-    
+
 }
