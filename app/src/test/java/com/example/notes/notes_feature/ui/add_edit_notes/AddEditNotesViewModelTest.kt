@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import com.example.notes.MainCoroutineRule
 import com.example.notes.NotesDestinationsArgs
+import com.example.notes.notes_feature.aplication.GetNoteUseCase
 import com.example.notes.notes_feature.domain.NotesRepository
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
@@ -26,6 +27,7 @@ class AddEditNotesViewModelTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     private val notesRepositoryMock = mockk<NotesRepository>(relaxed = true)
+    private val getNoteUseCaseMockk = mockk<GetNoteUseCase>(relaxed = true)
 
     private val myTestScheduler = TestCoroutineScheduler()
     private val testDispatcher = UnconfinedTestDispatcher(myTestScheduler)
@@ -36,7 +38,7 @@ class AddEditNotesViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = AddEditNotesViewModel(notesRepositoryMock, SavedStateHandle(mapOf(NotesDestinationsArgs.NOTE_ID_ARG to "0")), testDispatcher)
+        viewModel = AddEditNotesViewModel(notesRepositoryMock, getNoteUseCaseMockk , SavedStateHandle(mapOf(NotesDestinationsArgs.NOTE_ID_ARG to "0")), testDispatcher)
     }
 
     @Test
@@ -51,21 +53,23 @@ class AddEditNotesViewModelTest {
         // When the viewModel is initialized with destinationArgs argument
         val viewModelWithArg = AddEditNotesViewModel(
             notesRepositoryMock,
+            getNoteUseCaseMockk,
             SavedStateHandle(mapOf(NotesDestinationsArgs.NOTE_ID_ARG to "1")),
             testDispatcher
         )
 
         // Repository should fetch the note with the parameters id
-        verify { notesRepositoryMock.getNoteById(1) }
+        verify { getNoteUseCaseMockk(1) }
     }
 
     @Test
     fun `viewModel initialized with argument 1, state is updated with content of note id 1`() = runTest {
 
         val expectedResult = AddEditNoteUiState(1, "title1", "content1", 1)
-        every { notesRepositoryMock.getNoteById(1) } returns Note(1, "title1", "content1", 1)
+        every { getNoteUseCaseMockk(1) } returns Note(1, "title1", "content1", 1)
         val viewModelWithArg = AddEditNotesViewModel(
             notesRepositoryMock,
+            getNoteUseCaseMockk,
             SavedStateHandle(mapOf(NotesDestinationsArgs.NOTE_ID_ARG to "1")),
             testDispatcher
         )
@@ -105,9 +109,10 @@ class AddEditNotesViewModelTest {
     fun `saveNote, calls repository upsert with correct argument`(){
 
         val note = Note(1, "title1", "content1", 1)
-        every { notesRepositoryMock.getNoteById(1) } returns note
+        every { getNoteUseCaseMockk(1) } returns note
         val viewModelWithArg = AddEditNotesViewModel(
             notesRepositoryMock,
+            getNoteUseCaseMockk,
             SavedStateHandle(mapOf(NotesDestinationsArgs.NOTE_ID_ARG to "1")),
             testDispatcher
         )
@@ -124,6 +129,7 @@ class AddEditNotesViewModelTest {
         every { notesRepositoryMock.getNoteById(1) } returns note
         val viewModelWithArg = AddEditNotesViewModel(
             notesRepositoryMock,
+            getNoteUseCaseMockk,
             SavedStateHandle(mapOf(NotesDestinationsArgs.NOTE_ID_ARG to "1")),
             testDispatcher
         )
@@ -145,6 +151,7 @@ class AddEditNotesViewModelTest {
         every { notesRepositoryMock.getNoteById(1) } returns note
         val viewModelWithArg = AddEditNotesViewModel(
             notesRepositoryMock,
+            getNoteUseCaseMockk,
             SavedStateHandle(mapOf(NotesDestinationsArgs.NOTE_ID_ARG to "1")),
             testDispatcher
         )

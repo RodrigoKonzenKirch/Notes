@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notes.NotesDestinationsArgs
 import com.example.notes.di.DispatcherIo
+import com.example.notes.notes_feature.aplication.GetNoteUseCase
 import com.example.notes.notes_feature.data.Note
 import com.example.notes.notes_feature.domain.NotesRepository
 import com.example.notes.notes_feature.ui.NoteColors
@@ -38,6 +39,7 @@ data class AddEditNoteUiState(
 @HiltViewModel
 class AddEditNotesViewModel @Inject constructor(
     private val repository: NotesRepository,
+    private val getNote: GetNoteUseCase,
     savedStateHandle: SavedStateHandle,
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher
 ): ViewModel() {
@@ -112,7 +114,7 @@ class AddEditNotesViewModel @Inject constructor(
             it.copy(isLoading = true)
         }
         viewModelScope.launch(dispatcherIo) {
-            repository.getNoteById(noteId).let { note ->
+            getNote(noteId).let { note ->
                 _uiState.update {
                     it.copy(
                         id = note.id,
